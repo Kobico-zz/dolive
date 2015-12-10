@@ -1,0 +1,64 @@
+<ion-view class="newpackage">
+  <ion-content>
+	<div class="button-bar" style="direction:rtl;padding:0;margin:0">
+    	<button
+    		class="button icon-right option-button {{package.types[$index].icon}}"
+    		ng-model="package.selectedType"
+    		ng-repeat="type in packageSettings.types"
+    		ng-class="{'button-calm': package.selectedType === $index}"
+    		ng-click="package.setType($index)">{{type.name}}
+    	</button>
+    </div>
+    <label class="item item-input">
+	    <i class="icon ion-location placeholder-icon"></i>
+	    <input type="text" ng-model="package.from.address" ng-placeholder="{{package.from.address != '' ? package.from.address : 'כתובת מקור'}}">
+	</label>
+	<label class="item item-input">
+	    <i class="icon ion-location placeholder-icon"></i>
+	    <input type="text" ng-model="package.to.address" placeholder="כתובת יעד">
+	</label>
+	<div class="item item-divider">
+		<b>תיאור המשלוח</b>
+	</div>
+	<label class="item item-input">
+	    <textarea 
+	    	type="text" 
+	    	class="description" 
+	    	ng-model="package.description"></textarea>
+	</label>
+	<div class="item item-input-inset more-details">
+		<label class="item-input-wrapper">
+			<input class="telephone" type="tel" ng-model="package.from.tel" placeholder="טלפון שולח">
+		</label>    	
+		<button class="button button-outline button-calm button-small">פרטים נוספים</button>
+    </div>
+    <div class="item item-input-inset more-details">
+		<label class="item-input-wrapper">
+			<input class="telephone" type="tel" ng-model="package.to.tel" placeholder="טלפון מקבל">
+		</label>    	
+		<button class="button button-outline button-calm button-small">פרטים נוספים</button>
+    </div>
+	<div class="button-bar" style="direction:rtl;padding:0;margin:0">
+    	<button
+    		class="button option-button"
+    		ng-model="package.time.label"
+    		ng-repeat="time in packageSettings.times"
+    		ng-class="{'button-balanced': package.time.label === time.name}"
+    		ng-click="package.setTime({label: timeLabel})">{{time.name}}
+    	</button>
+    </div>
+    <div class="item pictures">
+		<div class="add-pic" ng-click="takePicture()">
+			<i class="icon ion-camera"></i>
+		</div>
+		<ion-content class="item pics-gallery" zooming="false" direction="x">
+			<div class="pic" ng-repeat="pic in package.pics">
+				<img ng-src="{{pic}}">
+			</div>
+		</ion-content>
+	</div>
+    <button 
+    		class="button button-positive button-block submit-package"
+    		ng-click="package.submit()">שלח חבילה</button>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,57 @@
+{
+	"defaultSettings" : {
+		"package" : {
+			"types": [
+				{
+					"name": "מעטפה",
+					"icon": "ion-email"
+				},
+				{
+					"name": "חבילה קטנה",
+					"icon": "ion-briefcase"
+				},
+				{
+					"name": "חבילה גדולה",
+					"icon": "ion-cube"
+				}
+			],
+			"sizes": [
+		        {
+		          "name": "עד קילו וחצי, 20 סנטימטר אורך ורוחב",
+		          "kg": 1.5,
+		          "width": 0.2,
+		          "height": 0.2
+		        },
+		        {
+		          "name": "עד שני קילו, חצי מטר אורך ורוחב",
+		          "kg": 2,
+		          "width": 0.5,
+		          "height": 0.5
+		        },
+		        {
+		          "name": "עד שלושה קילו, 80 סנטימטר אורך ורוחב",
+		          "kg": 3,
+		          "width": 0.8,
+		          "height": 0.8
+		        }
+		    ],
+		    "times": [
+		    	{
+		    		"name": "עכשיו",
+		    		"hours": 0,
+		    		"minutes": 30
+		    	},
+		    	{
+		    		"name": "בשעתיים הקרובות",
+		    		"hours": 2,
+		    		"minutes": 0
+		    	},
+		    	{
+		    		"name": "אחר כך",
+		    		"hours": 5,
+		    		"minutes": 0
+		    	}
+		    ]
+		}
+	}
+}

@@ -1,0 +1,45 @@
+<ion-modal-view class="size-selector">
+	<ion-header-bar class="bar bar-header bar-dark">
+		<h1 class="title">גודל חבילה למשלוח</h1>
+		<button class="button button-clear ion-close-circled" ng-click="sizeSelectorModal.hide()"></button>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	  <div class="list">
+	  	<div class="item item-divider icon" 
+	  		ng-class="{'ion-arrow-down-b': !options.showDefaults, 'ion-arrow-up-b': options.showDefaults}"
+	  		ng-click="options.showDefaults = ! options.showDefaults"><b>גדלים קיימים</b></div>
+	    <label ng-show="options.showDefaults" class="item item-input size-option" ng-repeat="size in packageSettings.sizes">
+	      <ion-radio class="icon-left" ng-change="options.setCustomSize(size)" ng-model="options.customSize" ng-value="$index">
+	      	{{size.name}}
+	      </ion-radio>
+	    </label>
+	    <div class="item item-divider heading"><b>התאם גודל אישית</b></div>
+	    <div class="item item-input-inset custom-package-size" style="border-bottom:0px">
+	    	<label>משקל</label><input type="number" min="0.2" max="5" ng-model="options.customSize.kg">
+	    	<label>רוחב</label><input type="number" min="0.2" max="5" ng-model="options.customSize.width">
+	    	<label>גובה</label><input type="number" min="0.2" max="5" ng-model="options.customSize.height">
+	    	<br>
+
+	    </div>
+	    <div ng-show="!options.saveSizeToList" class="item item-checkbox" style="padding:10px">
+	    	<label class="checkbox">
+		       <input type="checkbox" ng-model="options.saveSizeToList">
+		    </label>
+		    הוסף לרשימת גדלים
+	    </div>
+	    <div ng-show="options.saveSizeToList" class="item item-checkbox" style="padding:2px">
+	    	<label class="checkbox" style="max-width:50px">
+		       <input type="checkbox" ng-model="options.saveSizeToList" style="max-width:50px">
+		    </label>
+		    <input type="text" placeholder="הכנס שם" style="float:left;width:80%;border: 1px #eee solid;font-size:16px;color:#333;font-weight:bold">
+	    </div>
+	  </div>
+	  <div class="button-bar">
+	  <button class="button button-positive" ng-click="package.setSize(options.customSize)">אשר</button>
+	  <button class="button button-assertive" ng-click="">בטל</button>
+	  </div>
+	  <div class="sample-img">
+	  	<img ng-src="{{package.pics[0]}}">
+	  </div>
+	</ion-content>
+</ion-modal-view>
