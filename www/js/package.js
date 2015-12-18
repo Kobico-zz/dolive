@@ -1,17 +1,23 @@
 (function(angular) {
   'use strict';
   angular.module('deliveryApp.package',[])
-  .controller('NewpackageCtrl', function($rootScope, $scope, $ionicModal, $timeout, $cordovaCamera, CameraOptions, LocationService, Packages, userSettings) {
-    $scope.packageSettings = userSettings.package;
+  .factory('userPackages', function($firebaseArray) {
+    var ref = new Firebase('https://kobico-dolive.firebaseio.com/packages');
+    return $firebaseArray(ref);
+  })
+  .controller('NewpackageCtrl', function($rootScope, $scope, $ionicModal, $timeout, $cordovaCamera, CameraOptions, LocationService) {
+    console.log($rootScope.user);
+    $scope.packageSettings = $rootScope.user.account.settings.package;
+    console.log($scope.packageSettings);
     $scope.options = {
       saveSizeToList: false,
       showDefaults: false,
-      customSize: $scope.packageSettings.sizes[0],
+      customSize: {},
       setCustomSize: function(customSize) {
         this.customSize = customSize;
       }
     };
-
+    $scope.options.customSize = $scope.packageSettings.sizes[0];
     $scope.package = {
       selectedType: 0,
       from: {

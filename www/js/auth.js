@@ -1,6 +1,10 @@
 (function(angular) {
   'use strict';
   angular.module('deliveryApp.auth', [])
+  .factory('Auth', function($firebaseAuth) {
+    var ref = new Firebase('https://kobico-dolive.firebaseio.com/users');
+    return $firebaseAuth(ref);
+  })
   .controller('AuthCtrl',function($rootScope, Login) {
     this.errors = [];
     $rootScope.$on('login:success', function(e,data) {
@@ -18,6 +22,7 @@
       });
     };
     this.facebookLogin = function() {
+
       Login.facebookLogin().then(function(authData) {
         $rootScope.$broadcast('login:success',{user: authData});
         $rootScope.loginModal.hide();
@@ -91,7 +96,21 @@
       });
     };
     this.logout = function() {
-      Auth.$unauth();
+      return Auth.$unauth();
     };
+  })
+  .service('Account', function($q, Login, Settings) {
+    this.get = function() {
+      return $q(function(resolve, reject) {
+        Login.authenticate().then(function(user) {
+          console.log(user);
+          user.account = {};
+          Settings.getUserSettings(user).then(function(settings) {
+            user.account.settings = settings;
+            resolve(user);
+          }).catch(function(error) { reject('Impossible to load user settings:\n'+error); });
+        }).catch(function(error) { reject('Impossible to load user data:\n'+error); });
+      });
+    }
   });
 })(angular);

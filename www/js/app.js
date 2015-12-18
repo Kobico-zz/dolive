@@ -5,14 +5,14 @@
   'ionic.service.core',
   'firebase',
   'ngCordova',
+  'deliveryApp.services',   
+  'deliveryApp.route',
   'deliveryApp.package',
-  'deliveryApp.auth'
+  'deliveryApp.auth',
+  'deliveryApp.settings'
   ])
-  .controller('AppCtrl', function($rootScope, $scope, $ionicPlatform, $ionicModal, $timeout, Auth, Login, authData) {
-    $rootScope.authData = authData;
-    $rootScope.$watch('authData',function(v) {
-      console.log(v);
-    });
+  .controller('AppCtrl', function($rootScope, $scope, $ionicPlatform, $ionicModal, $timeout, Auth, Login, user) {
+    $rootScope.user = user;
     $scope.showLogin = function() {
       $ionicModal.fromTemplateUrl('templates/login.html', {scope: null}).then(function(modal) {
         modal.show();
@@ -20,8 +20,9 @@
       });
     };
     $scope.logout = function() {
-      Auth.$unauth();
-      $scope.authData = null;
+      Login.logout().then(function() {
+        Login.authenticate();
+      });
     };
   })
   .run(function($ionicPlatform) {
@@ -42,44 +43,5 @@
       }
     });
     Ionic.io();
-  })
-
-  .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
-    $stateProvider
-
-      .state('app', {
-      url: '/app',
-      abstract: true,
-      templateUrl: 'templates/menu.html',
-      controller: 'AppCtrl',
-      resolve: {
-        authData: function(Login) {
-          return Login.authenticate();
-        }
-      }
-    })
-    .state('app.entry', {
-      url: '/entry',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/entry.html'
-        }
-      }
-    })
-    .state('app.newpackage', {
-      url: '/newpackage',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/newpackage.html',
-          controller: 'NewpackageCtrl'
-        }
-      },
-      resolve: {
-        userSettings: function(Settings) {
-          return Settings.getUserSettings();
-        }
-      }
-    });
-    $urlRouterProvider.otherwise('/app/entry');
   });
 })(angular);
